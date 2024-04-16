@@ -50,5 +50,7 @@ def main():
         print(f"{device['ip']}\t{device['mac']}")
     print("-----------------------------------------")
     
+
+
 if __name__ == "__main__":
     main()

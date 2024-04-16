@@ -67,9 +67,9 @@ def posting(*,driver,groups,url,postFile):
                 
                 pyautogui.typewrite(content)
                 pyautogui.hotkey('ctrl','v')
-                time.sleep(1)
-                driver.find_element(By.XPATH,'/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div[1]/div/div[2]/div[1]/div[1]/div[1]/div[2]/div/div/span/img').click()
-                driver.find_element(By.XPATH,'/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div[1]/div/div[2]/div[1]/div[1]/div[1]/div[2]/div/div[2]/div/div[3]/div/div').click()
+                time.sleep(5)
+                # driver.find_element(By.XPATH,'/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div[1]/div/div[2]/div[1]/div[1]/div[1]/div[2]/div/div/span/img').click()
+                # driver.find_element(By.XPATH,'/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div[1]/div/div[2]/div[1]/div[1]/div[1]/div[2]/div/div[2]/div/div[3]/div/div').click()
                 driver.find_element(By.XPATH,'/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div[1]/div/div[3]/div[3]/div/div/div/div[1]/div/span/span[contains(text(),"Publicar")]').click()
                 time.sleep(60)
         except Exception as e:
@@ -79,7 +79,7 @@ def main():
     url = "https://www.facebook.com/"
     email = config("email")
     password = config("password")
-    postFile = "./fBot/publicaciones/p2.txt" 
+    postFile = "./fBot/publicaciones/casa.txt" 
     groupsFile = "./fBot/publicaciones/groups.txt"
    
     stp = setup(url=url,groupsFile=groupsFile)    
