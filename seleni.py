@@ -10,6 +10,7 @@ from selenium import webdriver
 # from selenium.webdriver.common.keys import Keys
 from decouple import config
 import pyautogui
+import undetected_chromedriver as uc
 # import webbrowser
 # from selenium.webdriver.support.ui import WebDriverWait
 # from selenium.webdriver.support import expected_conditions as EC
@@ -19,15 +20,17 @@ def clear_screen():
 
 def setup(*,url,groupsFile):
     clear_screen()
-    chrome_options = webdriver.ChromeOptions()
+    chrome_options = uc.ChromeOptions()
     prefs = {"profile.default_content_setting_values.notifications" : 2}
     chrome_options.add_experimental_option("prefs",prefs)
-   
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()),options=chrome_options)
+    chrome_options.add_argument("--headless")
+    driver = uc.Chrome(service=Service(ChromeDriverManager().install()),options=chrome_options)
    
     driver.get(url)
     driver.implicitly_wait(10)
-    driver.maximize_window()
+    # driver.maximize_window()
+    
+    
     groups = []
     with open(groupsFile,'r') as file:
         groups = file.readlines()
@@ -65,11 +68,14 @@ def posting(*,driver,groups,url,postFile):
                 
                 print(f"[+] Contenido: {content}")
                 
-                pyautogui.typewrite(content)
-                pyautogui.hotkey('ctrl','v')
+                # pyautogui.typewrite(content)
+                driver.find_element(By.XPATH,"/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div[1]/div/div[2]/div[1]/div[1]/div[1]/div[1]/div/div/div/div/div/div/div/div/div").click()
+                driver.find_element(By.XPATH,"/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div[1]/div/div[2]/div[1]/div[1]/div[1]/div[1]/div/div/div/div/div/div/div/div/div").send_keys(content)
+
+                # pyautogui.hotkey('ctrl','v')
                 time.sleep(5)
-                # driver.find_element(By.XPATH,'/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div[1]/div/div[2]/div[1]/div[1]/div[1]/div[2]/div/div/span/img').click()
-                # driver.find_element(By.XPATH,'/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div[1]/div/div[2]/div[1]/div[1]/div[1]/div[2]/div/div[2]/div/div[3]/div/div').click()
+                driver.find_element(By.XPATH,'/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div[1]/div/div[2]/div[1]/div[1]/div[1]/div[2]/div/div/span/img').click()
+                driver.find_element(By.XPATH,'/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div[1]/div/div[2]/div[1]/div[1]/div[1]/div[2]/div/div[2]/div/div[3]/div/div').click()
                 driver.find_element(By.XPATH,'/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div/div/div[1]/form/div/div[1]/div/div/div[1]/div/div[3]/div[3]/div/div/div/div[1]/div/span/span[contains(text(),"Publicar")]').click()
                 time.sleep(60)
         except Exception as e:
@@ -79,7 +85,7 @@ def main():
     url = "https://www.facebook.com/"
     email = config("email")
     password = config("password")
-    postFile = "./fBot/publicaciones/casa.txt" 
+    postFile = "./fBot/publicaciones/p2.txt" 
     groupsFile = "./fBot/publicaciones/groups.txt"
    
     stp = setup(url=url,groupsFile=groupsFile)    
